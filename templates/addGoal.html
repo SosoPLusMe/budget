@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+<section class = 'addPage'>
+    <h1>Add a new Goal</h1>
+
+
+
+    <form action ="" method = "POST" enctype="multipart/form-data" novalidate> 
+
+        {{form.hidden_tag()}}
+        <h2> Target Name </h2>
+        {{form.Name.label}}{{form.Name()}}
+
+
+        {%for error in form.Name.errors%}
+        <p>{{error}}</p>
+        {%endfor%}
+        
+                <br>
+
+           
+   
+
+
+        
+        <h2>Goal   </h2>
+        {{form.Goal.label}}{{form.Goal()}}
+        {%for error in form.Goal.errors%}
+        <p>{{error}}</p>
+        {%endfor%}
+        <br>
+        <h2>Progess</h2>
+        {{form.Progress.label}}{{form.Progress()}}
+        {%for error in form.Progress.errors%}
+        <p>{{error}}</p>
+        {%endfor%}
+
+
+        <h2>Due</h2>
+        <p>{{form.Deadline.label}}{{form.Deadline()}}</p>
+        <br>         
+        {%for error in form.Deadline.errors%}
+        <p>{{error}}</p>
+        {%endfor%}
+        <p>
+        {{form.submit()}}
+        </p>
+    </form>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<section class = "product">
+
+
+    <section>
+        <h1>{{ budget["name"] }}</h1>
+
+        <h2>
+            Goal: €{{ budget["goal"] }}
+        </h2>
+
+
+        <h3>  Progress: €{{ budget["progress"]}}</h3>
+
+    </section>
+        <form action ="" method = "POST" enctype="multipart/form-data" novalidate> 
+
+        {{form.hidden_tag()}}
+
+        <h2> Product Name </h2>
+        {{form.progressAdvance.label}}{{form.progressAdvance()}}
+        {%for error in form.progressAdvance.errors%}
+        <p>{{error}}</p>
+        {%endfor%}
+        <p>{{form.progressWithdraw.label}}{{form.progressWithdraw()}}</p>
+            <p>
+        {{form.submit()}}
+        </p>
+        </form>
+</section>
+{% endblock %}

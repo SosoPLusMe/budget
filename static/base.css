@@ -1,0 +1,308 @@
+html{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0px;
+}
+
+
+nav,aside{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 1em;
+    gap: 2em;
+    position: sticky;
+}
+aside{
+    height: 5em;
+    border-bottom: 5px gray solid;
+    border-top: 5px gray solid;
+    
+}
+aside a, aside img{
+    max-width: 100%;
+    height: 100%;
+}
+
+#navFilter{
+    width: 60%;
+}
+iframe{
+    border: 2px grey dotted;
+}
+footer{
+    font-size: smaller;
+    color: white;
+    width: 100%;
+    background-color: grey;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0%;
+
+}
+footer section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+:root {
+    --primary-bg: #f8fafc;
+    --secondary-bg: #e0e7ff;
+    --box-bg: #fff;
+    --box-shadow: 0 2px 12px rgba(80, 80, 120, 0.08);
+    --accent: #4f8cff;
+    --accent-dark: #232946;
+    --progress-red: #ff5858;
+    --progress-orange: #f7b42c;
+    --progress-yellow: #ffe156;
+    --progress-green: #4fd67f;
+    --progress-brightgreen: #2ecc40;
+    --progress-bg: #e0e7ff;
+    --progress-bar: #4fd67f;
+    --border: #c7d2fe;
+    --text: #232946;
+    --text-light: #555;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    background: var(--primary-bg);
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+    min-height: 100vh;
+    letter-spacing: 0.01em;
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    margin: 0.5em 0 0.3em 0;
+    color: var(--text);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+a:hover {
+    color: var(--accent-dark);
+    text-decoration: underline;
+}
+
+section {
+    margin: 2em auto;
+    max-width: 700px;
+    background: rgba(255,255,255,0.92);
+    padding: 1.5em 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px 0 rgba(80, 80, 120, 0.07);
+}
+
+.product{
+    min-width: 250px;
+    max-width: 250px;
+    font-size: small;
+    
+}
+
+.product a{
+    width: 100%;
+}
+.product img{
+    max-width: 100%;
+}
+
+#barcont{
+    overflow-y: scroll;
+}
+
+.budgetbar{
+   display: flex; 
+   justify-content: space-between;
+   align-items: center;
+   padding: 0.75em 1em;
+   margin-bottom: 1em;
+   background: var(--secondary-bg);
+   border-radius: 10px;
+   box-shadow: 0 2px 8px rgba(80, 80, 120, 0.04);
+
+}
+
+.budgetbar a {
+    font-weight: 600;
+    font-size: 1.1em;
+    color: var(--accent);
+}
+
+.budgetbar b {
+    margin-left: 1em;
+    color: var(--text-light);
+    font-size: 1em;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background: var(--progress-red);
+    border-radius: 8px;
+    height: 16px;
+    margin: 0.5em 0 1.5em 0;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(80, 80, 120, 0.04);
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--progress-bar);
+    border-radius: 8px 0 0 8px;
+    transition: width 0.5s cubic-bezier(.4,2,.6,1);
+}
+
+#boxcont {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    justify-content: center;
+    margin-top: 2em;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    max-width: 100%;
+        padding: 1.5em 2em;
+}
+
+.budgetbox {
+    background: var(--box-bg);
+    border-radius: 18px;
+    box-shadow: var(--box-shadow);
+    padding: 2em 1.5em 2.2em 1.5em;
+    min-width: 320px;
+    max-width: 380px;
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2em;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.budgetbox:hover {
+    transform: translateY(-4px) scale(1.025);
+    box-shadow: 0 8px 24px rgba(80, 80, 120, 0.13);
+}
+
+.budgetbox a {
+    font-size: 1.18em;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.9em;
+    text-align: center;
+    letter-spacing: 0.01em;
+}
+
+.segmented-progress-bar {
+    display: flex;
+    gap: 0.5em;
+    margin-top: 0.7em;
+    width: 100%;
+    justify-content: center;
+}
+
+.segment {
+    width: 6px;
+    height: 20px;
+    border-radius: 4px;
+    background: var(--progress-bg);
+    border: 1px solid var(--border);
+    transition: background 0.3s, border-color 0.3s;
+    box-shadow: 0 1px 2px rgba(80, 80, 120, 0.04);
+}
+
+.segment-1.filled { background: var(--progress-red); border-color: var(--progress-red); }
+.segment-2.filled { background: var(--progress-orange); border-color: var(--progress-orange); }
+.segment-3.filled { background: var(--progress-yellow); border-color: var(--progress-yellow); }
+.segment-4.filled { background: var(--progress-green); border-color: var(--progress-green); }
+.segment-5.filled { background: var(--progress-brightgreen); border-color: var(--progress-brightgreen); }
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.5em;
+    margin: 0.5em 0 1em 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1em;
+    background: var(--primary-bg);
+    transition: border-color 0.2s;
+}
+input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    outline: none;
+}
+
+input[type="submit"], button, .btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.55em 1.5em;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(80, 80, 120, 0.07);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+input[type="submit"]:hover, button:hover, .btn:hover {
+    background: var(--accent-dark);
+    box-shadow: 0 4px 16px rgba(80, 80, 120, 0.13);
+
+
+}
+
+.order-btns{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff00;
+    width: 2.5em;
+    height: 2.5em;
+    padding: 0;
+    
+
+}
+
+.order-btns:hover{
+    background: rgb(121, 187, 253);
+    box-shadow: 0 4px 16px rgba(80, 80, 120, 0.13);
+}
+.order-btns img{
+    width: 100%;
+    object-fit: contain;
+}
+.gridboxes{
+    display: none;
+}
+
+@media (max-width: 900px) {
+    section {
+        max-width: 98vw;
+        padding: 1em;
+    }
+    #boxcont {
+        gap: 1em;
+    }
+    .budgetbox {
+        min-width: 0;
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
+}
+
+/* Only 2 budget boxes per line on large screens */
+@media (min-width: 700px) {
+    #boxcont {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .budgetbox {
+        flex: 0 1 calc(50% - 2em);
+    }
+}
