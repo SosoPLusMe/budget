@@ -115,10 +115,30 @@ section {
 
 #barcont{
     overflow-y: scroll;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 0;
+    border: var(--accent);
+}
+#barcont td{
+    width: 33.33%;
+    padding: 1em;
+}
+.budgetbar > td:first-child{
+    border-radius: 10px 0px 0px 10px;
+}
+#barcont td + td{
+    text-align: center;
+}
+#barcont td + td + td{
+    text-align: right;
+
+    border-radius: 0px 10px 10px 0px;
 }
 
 .budgetbar{
-   display: flex; 
+   
    justify-content: space-between;
    align-items: center;
    padding: 0.75em 1em;
@@ -126,6 +146,7 @@ section {
    background: var(--secondary-bg);
    border-radius: 10px;
    box-shadow: 0 2px 8px rgba(80, 80, 120, 0.04);
+   
 
 }
 
@@ -281,6 +302,88 @@ input[type="submit"]:hover, button:hover, .btn:hover {
     display: none;
 }
 
+/* Auth form styles for login and signup pages */
+form[action=""], form[novalidate] {
+    max-width: 350px;
+    margin: 3em auto 0 auto;
+    background: rgba(255,255,255,0.97);
+    padding: 2em 2em 1.5em 2em;
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(80, 80, 120, 0.10);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+form[action=""] label,
+form[novalidate] label {
+    font-weight: 500;
+    color: var(--accent-dark, #232946);
+    margin-bottom: 0.2em;
+}
+
+form[action=""] input,
+form[novalidate] input {
+    width: 100%;
+    padding: 0.6em 0em 0.6em 0.1em;
+    border: 1px solid var(--border, #c7d2fe);
+    border-radius: 6px;
+    font-size: 1em;
+    background: var(--primary-bg, #f8fafc);
+    margin-bottom: 0.5em;
+    transition: border-color 0.2s;
+}
+
+form[action=""] input:focus,
+form[novalidate] input:focus {
+    border-color: var(--accent, #4f8cff);
+    outline: none;
+}
+
+form[action=""] .error,
+form[novalidate] .error,
+form[action=""] p,
+form[novalidate] p {
+    color: #e74c3c;
+    font-size: 0.97em;
+    margin: 0 0 0.5em 0;
+}
+
+form[action=""] input[type="submit"],
+form[novalidate] input[type="submit"],
+form[action=""] button,
+form[novalidate] button {
+    background: var(--accent, #4f8cff);
+    color: #fff;
+    border: none;
+    padding: 0.7em 0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    margin-top: 0.5em;
+    box-shadow: 0 2px 8px rgba(80, 80, 120, 0.07);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+form[action=""] input[type="submit"]:hover,
+form[novalidate] input[type="submit"]:hover,
+form[action=""] button:hover,
+form[novalidate] button:hover {
+    background: var(--accent-dark, #232946);
+    box-shadow: 0 4px 16px rgba(80, 80, 120, 0.13);
+}
+
+form[action=""] a,
+form[novalidate] a {
+    color: var(--accent, #4f8cff);
+    text-align: center;
+    margin-top: 1em;
+    font-size: 1em;
+    text-decoration: underline;
+    display: block;
+}
+
 @media (max-width: 900px) {
     section {
         max-width: 98vw;
@@ -304,5 +407,12 @@ input[type="submit"]:hover, button:hover, .btn:hover {
     }
     .budgetbox {
         flex: 0 1 calc(50% - 2em);
+    }
+}
+
+@media (max-width: 600px) {
+    form[action=""], form[novalidate] {
+        max-width: 98vw;
+        padding: 1em 0.5em 1em 0.5em;
     }
 }

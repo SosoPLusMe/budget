@@ -1,25 +1,68 @@
 {% extends "base.html" %}
 
 {% block main_content%}
-    <form action ="" method = "POST" novalidate> 
-        {{form.hidden_tag()}}
-        {{form.username.label}}
-        {{form.username()}}
-        <br>
-        {%for error in form.username.errors%}
-            {{error}}
-        {%endfor%}
-        <br>
-        {{form.password.label}}
-        {{form.password()}}
-        <br>
-        {%for error in form.password.errors%}
-            {{error}}
-        {%endfor%}
-        <br>
-        {{form.submit()}}
-        <br>
-        <a href="{{url_for('SignUp')}}">Sign up</a>
-    </form>
+<form action="" method="POST" novalidate>
+    {{form.hidden_tag()}}
+    {{form.username.label}}
+    {{form.username()}}
+    <br>
+    {%for error in form.username.errors%}
+    {{error}}
+    {%endfor%}
+    <br>
+    {{form.password.label}}
+    {{form.password()}}
+    <br>
+    {%for error in form.password.errors%}
+    {{error}}
+    {%endfor%}
+    <!-- Load the new Google Identity Services library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Container where Google will render the button -->
+    <div id="g_id_signin"></div>
+
+    <script>
+        // Initialize the Google Sign-In button
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: "YOUR_GOOGLE_CLIENT_ID", // from Google Cloud Console
+                callback: handleCredentialResponse
+            });
+
+            google.accounts.id.renderButton(
+                document.getElementById("g_id_signin"),
+                { theme: "outline", size: "large" } // customization options
+            );
+
+            // Optional: automatically prompt returning users
+            // google.accounts.id.prompt();
+        };
+
+        // Called when the user successfully signs in
+        function handleCredentialResponse(response) {
+            // Send the ID token to your Flask backend
+            fetch("/google-login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: response.credential })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "/";
+                    } else {
+                        alert("Google login failed");
+                    }
+                });
+        }
+    </script>
+
+    <br>
+    {{form.submit()}}
+    <br>
+
+    <a href="{{url_for('SignUp')}}">Sign up</a>
+</form>
 
 {% endblock %}

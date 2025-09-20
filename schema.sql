@@ -19,7 +19,7 @@ CREATE TABLE users
 (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,
-    password TEXT NOT NULL,
+    password TEXT,
     joinDate DATE NOT NULL
 );
 

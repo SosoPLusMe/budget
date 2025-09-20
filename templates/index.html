@@ -4,54 +4,79 @@
 
 <h1>Hello {{g.user}}</h1>
 
-<a href="{{ url_for('logout') }}">Logout</a>
+<a href="{{ url_for('logout') }}" onclick="signOut();">Logout</a>
+<script>
+    function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+    }
+</script>
 <nav>
 
 
-<button id = 'rowsBtn' class = 'order-btns'><img src = '../static/images/bars.svg'></button><button id = 'gridBtn' class = 'order-btns'><img src = '../static/images/grid.svg'></button>
+    <button id='rowsBtn' class='order-btns'><img src='../static/images/bars.svg'></button><button id='gridBtn'
+        class='order-btns'><img src='../static/images/grid.svg'></button>
 </nav>
-<section id = 'barcont'>
+<table id='barcont'>
+    <thead>
+        <tr>
+            <th>Goal</th>
+            <th>Progress</th>
+            <th>Remaining Time</th>
+        </tr>
+    </thead>
 
-    {% for budget in budgets %}
+    <tbody>
+        {% for budget in budgets %}
 
-    <section class='budgetbar'>
-        <a href="{{ url_for('budget', budget_id=budget['budget_id'] ) }}"><i>{{ budget['name']}}</i></a> <b>{% if
-            ((budget['progress']/budget['goal'])*100) > 100 %} Completed {% else %} {{
-            ((budget['progress']/budget['goal'])*100)|round(2)}}%{%endif%} </b>
-        <b> {%if budget['deadline'] > 90%}
+        <tr class='budgetbar'>
+            <td><a href="{{ url_for('budget', budget_id=budget['budget_id'] ) }}"><i>{{ budget['name']}}</i></a></td>
+            <td><b>{% if
+                    ((budget['progress']/budget['goal'])*100) > 100 %} Completed {% else %} {{
+                    ((budget['progress']/budget['goal'])*100)|round(2)}}%{%endif%} </b>
+            </td>
 
-            {{budget['deadline'] // 30}}M remaining
-            {%else%}
+            <td>
+                {% if budget['deadline'] > 90 %}
+                {{budget['deadline'] // 30}}M remaining
+                {% else %}
+                {{budget['deadline']}}D remaining
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: {{ ((budget['progress']/budget['goal'])*100)|round(2) }}%;">
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {%endfor%}
+    </tbody>
+</table>
 
-            {{budget['deadline']}}D remaining
-            {%endif%}
-        </b>
-
-    </section>
-    <div class="progress-bar-container">
-        <div class="progress-bar" style="width: {{ ((budget['progress']/budget['goal'])*100)|round(2) }}%"></div>
-    </div>
-    {%endfor%}
-</section>
 <section id='boxcont'>
 
-    
+
     {% for budget in budgets %}
     <section class='budgetbox gridboxes'>
-        
+
         <a href="{{ url_for('budget', budget_id=budget['budget_id'] ) }}">{{ budget['name']}}</a>
         <i class="segmented-progress-bar">
             {% set percent = (budget['progress']/budget['goal'])*100 %}
             {% set filled = (percent // 20)|int %}
             {% for i in range(1,6) %}
-                {% if i <= filled %}
-                    <div class="segment segment-{{i}} filled"></div>
+            {% if i <= filled %} <div class="segment segment-{{i}} filled">
+                </div>
                 {% else %}
-                    <div class="segment segment-{{i}}"></div>
+                <div class="segment segment-{{i}}"></div>
                 {% endif %}
-            {% endfor %}
+                {% endfor %}
         </i>
-        <br/>
+        <br />
         <p> {%if budget['deadline'] > 90%}
 
             {{budget['deadline'] // 30}}M remaining
@@ -60,28 +85,28 @@
             {{budget['deadline']}}D remaining
             {%endif%}
         </p>
-    
+
     </section>
     {%endfor%}
-    
+
 
 
     {% for random_budget in random_budgets %}
     <section class='budgetbox'>
-    
+
         <a href="{{ url_for('budget', budget_id=random_budget['budget_id'] ) }}">{{ random_budget['name']}}</a>
         <i class="segmented-progress-bar">
             {% set percent = (random_budget['progress']/random_budget['goal'])*100 %}
             {% set filled = (percent // 20)|int %}
             {% for i in range(1,6) %}
-                {% if i <= filled %}
-                    <div class="segment segment-{{i}} filled"></div>
+            {% if i <= filled %} <div class="segment segment-{{i}} filled">
+                </div>
                 {% else %}
-                    <div class="segment segment-{{i}}"></div>
+                <div class="segment segment-{{i}}"></div>
                 {% endif %}
-            {% endfor %}
+                {% endfor %}
         </i>
-        <br/>
+        <br />
         <p> {%if random_budget['deadline'] > 90%}
 
             {{random_budget['deadline'] // 30}}M remaining

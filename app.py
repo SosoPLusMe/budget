@@ -1,4 +1,8 @@
 from flask import Flask,session,render_template, redirect, url_for,g, request,jsonify
+from authlib.integrations.flask_client import OAuth
+from google.oauth2 import id_token
+from google.auth.transport import requests as grequests
+
 from database import get_db, close_db
 from flask_session import Session
 from forms import *
@@ -18,12 +22,7 @@ import random
 
 '''
 pthc-hgax-dziv-wktq-usbn
-Things to Look Out for:
-    admin login
-        username = Admin
-        password = 1
-    Stock status
-    commenting
+
 '''
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
@@ -46,6 +45,19 @@ receiver_email = "slawson2006.2@gmail.com"
 
 sender_email = "sosostockalerts@gmail.com"
 password = "gwqd xnxc itwi skjy"
+
+oauth = OAuth(app)
+CONF_URL = 'https://accounts.google.com/.well-known/openid-configuration'
+
+google = oauth.register(
+    name='google',
+    server_metadata_url=CONF_URL,
+    client_id=os.environ.get("856146957797-l1gnuoe0eesg6v1aldtd351aueuf659e"),
+    client_secret=os.environ.get("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"),
+    client_kwargs={
+        'scope': 'openid email profile'
+    }
+)
 
 
 def contactMail(sender,name,content):
@@ -179,8 +191,53 @@ def login():
     return render_template("login.html",form = form)
 
 
+from datetime import date
+
+@app.route('/google-login', methods=['POST'])
+def google_login():
+    db = get_db()
+    token = request.json.get('token')
+    print(os.environ.get("GOOGLE_CLIENT_ID"))
 
 
+    try:
+        idinfo = id_token.verify_oauth2_token(
+            token,
+            grequests.Request(),
+            os.environ.get("GOOGLE_CLIENT_ID")
+        )
+
+        google_name = idinfo.get('name')   # Full display name
+        email = idinfo.get('email')        # Still useful for uniqueness
+
+        # Check if a user with this email already exists
+        user = db.execute(
+            "SELECT * FROM users WHERE username = ?", (google_name,)
+        ).fetchone()
+
+        if user is None:
+            # If you want to ensure uniqueness, you could check by email instead
+            db.execute(
+                "INSERT INTO users (username, password, joinDate) VALUES (?, ?, ?)",
+                (google_name, None, date.today())
+            )
+            db.commit()
+            user = db.execute(
+                "SELECT * FROM users WHERE username = ?", (google_name,)
+            ).fetchone()
+
+        # Log them in
+        session.clear()
+        session['username'] = user['username']
+        session['loggedIn'] = True
+        session['user_id'] = user['user_id']
+        session.modified = True
+
+        return jsonify(success=True)
+
+    except ValueError:
+        return jsonify(success=False), 400
+    
 @app.route("/SignUp", methods = ["GET","POST"])
 def SignUp():
     db = get_db()
@@ -395,10 +452,10 @@ def editProduct(product_id):
     return render_template("editProduct.html", product=product, form = form)
     
 
-@app.route("/deleteBudget/<int:Budget_id>", methods=['GET', 'POST'])
+@app.route("/deleteBudget/<int:budget_id>", methods=['GET', 'POST'])
 def deleteBudget(budget_id):
     db = get_db()
-    db.execute(''' DELETE FROM budget 
+    db.execute(''' DELETE FROM budgets
                     WHERE budget_id = ?; ''',(budget_id,))
     db.commit()
     return redirect(url_for('home'))

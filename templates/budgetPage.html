@@ -1,21 +1,22 @@
 {% extends "base.html" %}
 
 {% block main_content %}
-<section class = "product">
+<section class="product">
 
 
-    <section>
-        <h1>{{ budget["name"] }}</h1>
 
-        <h2>
-            Goal: €{{ budget["goal"] }}
-        </h2>
+    <h1>{{ budget["name"] }}</h1>
+
+    <h2>
+        Goal: €{{ budget["goal"] }}
+    </h2>
 
 
-        <h3>  Progress: €{{ budget["progress"]}}</h3>
+    <h3> Progress: €{{ budget["progress"]}}</h3>
 
-    </section>
-        <form action ="" method = "POST" enctype="multipart/form-data" novalidate> 
+
+
+    <form action="" method="POST" enctype="multipart/form-data" novalidate>
 
         {{form.hidden_tag()}}
 
@@ -25,9 +26,12 @@
         <p>{{error}}</p>
         {%endfor%}
         <p>{{form.progressWithdraw.label}}{{form.progressWithdraw()}}</p>
-            <p>
-        {{form.submit()}}
+        <p>
+            {{form.submit()}}
         </p>
-        </form>
+    </form>
+
 </section>
+
+<a id = delete href="{{url_for('deleteBudget', budget_id=budget['budget_id']  )}}"><img src='../static/images/bin-delete-recycle-svgrepo-com.svg'> <br> </a>
 {% endblock %}
